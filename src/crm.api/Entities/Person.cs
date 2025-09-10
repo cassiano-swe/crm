@@ -11,7 +11,7 @@ public class Person(string name)
     public string? Description { get; init; }
     public Category? Category { get; init; }
     public LeadOrigin? LeadOrigin { get; init; }
-    public PersonContact? Contact { get; init; }
+    public PersonContact? Contact { get; set; }
 
     public static Person CreatePersonWithContact(string name,
         string? cpf,
@@ -56,6 +56,80 @@ public class Person(string name)
                 whatsapp: whatsapp,
                 workPhone: workPhone)
         };
+
+    public static Person CreatePersonWithContact(int Id,
+            string name,
+            string? cpf,
+            Organization? organization,
+            string? jobTitle,
+            DateTime? birthDate,
+            string? description,
+            Category? category,
+            LeadOrigin? leadOrigin,
+            string? availablePhone,
+            string? email,
+            string? facebook,
+            string? faxPhone,
+            string? instagram,
+            string? linkedin,
+            string? mobilePhone,
+            int? phoneExtension,
+            string? skype,
+            string? twitter,
+            string? whatsapp,
+            string? workPhone) =>
+            new Person(name: name)
+            {
+                Id = Id,
+                Cpf = cpf,
+                Organization = organization,
+                JobTitle = jobTitle,
+                BirthDate = birthDate,
+                Description = description,
+                Category = category,
+                LeadOrigin = leadOrigin,
+                Contact = PersonContact.Create(
+                    availablePhone: availablePhone,
+                    email: email,
+                    facebook: facebook,
+                    faxPhone: faxPhone,
+                    instagram: instagram,
+                    linkedin: linkedin,
+                    mobilePhone: mobilePhone,
+                    phoneExtension: phoneExtension,
+                    skype: skype,
+                    twitter: twitter,
+                    whatsapp: whatsapp,
+                    workPhone: workPhone)
+            };
+
+    public void CreateContact(string? availablePhone,
+            string? email,
+            string? facebook,
+            string? faxPhone,
+            string? instagram,
+            string? linkedin,
+            string? mobilePhone,
+            int? phoneExtension,
+            string? skype,
+            string? twitter,
+            string? whatsapp,
+            string? workPhone)
+    {
+        Contact = PersonContact.Create(
+                    availablePhone: availablePhone,
+                    email: email,
+                    facebook: facebook,
+                    faxPhone: faxPhone,
+                    instagram: instagram,
+                    linkedin: linkedin,
+                    mobilePhone: mobilePhone,
+                    phoneExtension: phoneExtension,
+                    skype: skype,
+                    twitter: twitter,
+                    whatsapp: whatsapp,
+                    workPhone: workPhone);
+    }
 
     public class PersonContact
     {

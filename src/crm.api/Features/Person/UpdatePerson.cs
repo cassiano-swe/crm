@@ -6,9 +6,10 @@ using crm.api.Extensions;
 
 namespace crm.api.Features.Person;
 
-public static class CreatePerson
+public static class UpdatePerson
 {
     internal record Request(
+        int Id,
         string Name,
         string? Cpf,
         int? Organization,
@@ -58,13 +59,14 @@ public static class CreatePerson
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
-            app.MapPost("api/people", Handler).WithTags("People");
+            app.MapPut("api/people", Handler).WithTags("People");
         }
     }
 
     private static async Task<IResult> Handler(Request request, Context context, HttpContext httpContext)
     {
-        var person = Entities.Person.CreatePersonWithContact(
+        var personForUpdate = Entities.Person.CreatePersonWithContact(
+            Id: request.Id,
             name: request.Name,
             cpf: request.Cpf,
             organization: request.Organization.HasValue
@@ -93,16 +95,36 @@ public static class CreatePerson
             workPhone: request.WorkPhone);
 
         var validator = new PersonValidator();
-        var validationResult = await validator.ValidateAsync(person);
+        var validationResult = await validator.ValidateAsync(personForUpdate);
 
         if (!validationResult.IsValid)
             return Results.BadRequest(validationResult.Errors);
 
-        context.People.Add(person);
+        var person = await context.People.FindAsync(personForUpdate.Id);
+
+        if (person is null)
+        {
+            return Results.NotFound();
+        }
+
+        context.Entry(person).CurrentValues.SetValues(personForUpdate);
+
+        person.CreateContact(availablePhone: personForUpdate.Contact?.AvailablePhone,
+                    email: personForUpdate.Contact?.Email,
+                    facebook: personForUpdate.Contact?.Facebook,
+                    faxPhone: personForUpdate.Contact?.FaxPhone,
+                    instagram: personForUpdate.Contact?.Instagram,
+                    linkedin: personForUpdate.Contact?.Linkedin,
+                    mobilePhone: personForUpdate.Contact?.MobilePhone,
+                    phoneExtension: personForUpdate.Contact?.PhoneExtension,
+                    skype: personForUpdate.Contact?.Skype,
+                    twitter: personForUpdate.Contact?.Twitter,
+                    whatsapp: personForUpdate.Contact?.Whatsapp,
+                    workPhone: personForUpdate.Contact?.WorkPhone);
 
         await context.SaveChangesAsync();
 
-        return Results.Created($"{httpContext.Request.GetBaseUrl()}/api/people/{person.Id}",
+        return Results.Ok(
             new Response(
                 Id: person.Id,
                 Name: person.Name,

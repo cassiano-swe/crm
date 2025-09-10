@@ -5,14 +5,13 @@ namespace crm.api.Database;
 
 public class Context(DbContextOptions<Context> options) : DbContext(options)
 {
-    public DbSet<Contact> Contacts{get; init;}
-    public DbSet<Organization> Organizations{get; init;}
-    public DbSet<Sector> Sectors{get; init;}
-    public DbSet<LeadOrigin> LeadOrigins{get; init;}
-    public DbSet<Category> Categories{get; init;}
-    public DbSet<Person> People{get; init;}
+    public DbSet<Contact> Contacts { get; init; }
+    public DbSet<Organization> Organizations { get; init; }
+    public DbSet<Sector> Sectors { get; init; }
+    public DbSet<LeadOrigin> LeadOrigins { get; init; }
+    public DbSet<Category> Categories { get; init; }
+    public DbSet<Person> People { get; init; }
 
-    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Organization>(entity =>
@@ -31,7 +30,7 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
                 .HasForeignKey("CategoryId")
                 .OnDelete(DeleteBehavior.Restrict);
         });
-        
+
         modelBuilder.Entity<Person>(entity =>
         {
             entity.HasKey(p => p.Id);
