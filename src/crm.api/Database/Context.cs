@@ -19,15 +19,12 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
             entity.HasKey(p => p.Id);
             entity.HasOne(p => p.Sector)
                 .WithMany()
-                .HasForeignKey("SectorId")
                 .OnDelete(DeleteBehavior.Restrict);
             entity.HasOne(p => p.LeadOrigin)
                 .WithMany()
-                .HasForeignKey("LeadOriginId")
                 .OnDelete(DeleteBehavior.Restrict);
             entity.HasOne(p => p.Category)
                 .WithMany()
-                .HasForeignKey("CategoryId")
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
@@ -36,19 +33,15 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
             entity.HasKey(p => p.Id);
             entity.HasOne(p => p.LeadOrigin)
                 .WithMany()
-                .HasForeignKey("LeadOriginId")
                 .OnDelete(DeleteBehavior.Restrict);
             entity.HasOne(p => p.Category)
                 .WithMany()
-                .HasForeignKey("CategoryId")
                 .OnDelete(DeleteBehavior.Restrict);
             entity.HasOne(p => p.Organization)
                 .WithMany()
-                .HasForeignKey("OrganizationId")
                 .OnDelete(DeleteBehavior.Restrict);
             entity.HasOne(p => p.Contact)
                 .WithMany()
-                .HasForeignKey("CategoryId")
                 .OnDelete(DeleteBehavior.Cascade);
         });
     }

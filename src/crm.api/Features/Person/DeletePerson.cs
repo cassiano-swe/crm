@@ -17,7 +17,7 @@ public static class DeletePerson
         }
     }
 
-    private static async Task<IResult> Handler(int id, Context context, HttpContext httpContext)
+    private static async Task<IResult> Handler(Guid id, Context context, HttpContext httpContext)
     {
         Entities.Person? result = await context.People.FindAsync(id);
 

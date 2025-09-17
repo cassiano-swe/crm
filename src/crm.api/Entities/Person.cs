@@ -2,7 +2,7 @@ namespace crm.api.Entities;
 
 public class Person(string name)
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     public string Name { get; init; } = name;
     public string? Cpf { get; init; }
     public Organization? Organization { get; init; }
@@ -35,6 +35,7 @@ public class Person(string name)
         string? workPhone) =>
         new Person(name: name)
         {
+            Id = new Guid(),
             Cpf = cpf,
             Organization = organization,
             JobTitle = jobTitle,
@@ -57,7 +58,7 @@ public class Person(string name)
                 workPhone: workPhone)
         };
 
-    public static Person CreatePersonWithContact(int Id,
+    public static Person CreatePersonWithContact(Guid Id,
             string name,
             string? cpf,
             Organization? organization,
@@ -137,8 +138,8 @@ public class Person(string name)
         {
         }
 
-        public int Id { get; init; }
-        public int PeopleId { get; init; }
+        public Guid Id { get; init; }
+        public Guid PeopleId { get; init; }
         public string? AvailablePhone { get; init; }
         public string? Email { get; init; }
         public string? Facebook { get; init; }
@@ -167,6 +168,7 @@ public class Person(string name)
             string? workPhone) =>
             new PersonContact
             {
+                Id = new Guid(),
                 AvailablePhone = availablePhone,
                 Email = email,
                 Facebook = facebook,

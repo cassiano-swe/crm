@@ -10,7 +10,7 @@ namespace crm.api.Features.Person;
 public static class GetPerson
 {
     private record Response(
-        int Id,
+        Guid Id,
         string Name,
         string? Cpf,
         Organization? Organization,
@@ -41,7 +41,7 @@ public static class GetPerson
         }
     }
 
-    private static async Task<IResult> Handler(int id, Context context, HttpContext httpContext)
+    private static async Task<IResult> Handler(Guid id, Context context, HttpContext httpContext)
     {
         var result = await context.People.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
 

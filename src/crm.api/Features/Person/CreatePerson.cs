@@ -31,7 +31,7 @@ public static class CreatePerson
         string? WorkPhone);
 
     private record Response(
-        int Id,
+        Guid Id,
         string Name,
         string? Cpf,
         Organization? Organization,

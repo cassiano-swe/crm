@@ -9,7 +9,7 @@ namespace crm.api.Features.Person;
 public static class UpdatePerson
 {
     internal record Request(
-        int Id,
+        Guid Id,
         string Name,
         string? Cpf,
         int? Organization,
@@ -32,7 +32,7 @@ public static class UpdatePerson
         string? WorkPhone);
 
     private record Response(
-        int Id,
+        Guid Id,
         string Name,
         string? Cpf,
         Organization? Organization,
