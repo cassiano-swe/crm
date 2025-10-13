@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\crm.api\crm.api.csproj" />
+    <ProjectReference Include="..\crm.MigrationService\crm.MigrationService.csproj" />
   </ItemGroup>
 
 </Project>
